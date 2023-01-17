@@ -1,0 +1,403 @@
+/* --------------------------------------
+	General
+-------------------------------------- */
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 62.5%;
+}
+
+body {
+  position: relative;
+  z-index: 1;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: $main-font-color;
+  background-color: $body-bg-color;
+  text-size-adjust: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: $main-font-color;
+  transition: all 0.4s linear;
+}
+
+a:focus,
+*:focus {
+  outline: none;
+}
+
+a:hover img {
+  opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+/* --------------------------------------
+	container
+-------------------------------------- */
+.container {
+  width: auto;
+  max-width: 600px;
+  padding: 0 30px;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* --------------------------------------
+	Header
+-------------------------------------- */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.header .header__inner {
+  padding: 20px;
+}
+
+@media screen and (max-width: 500px) {
+  .header .header__inner {
+    padding: 15px;
+  }
+}
+
+/* --------------------------------------
+	Footer
+-------------------------------------- */
+.footer {
+  margin: 30px 0 0;
+  border-top: 1px solid black;
+}
+
+.footer .footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.footer h3 a {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #ff9800;
+}
+
+.footer h4 a {
+  display: inline-block;
+  font-weight: bold;
+  color: #24292f;
+}
+
+.footer h4 a::before {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0 4px -2px 0;
+  content: '';
+  background: url(/src/assets/icons/github.svg) no-repeat center center;
+  background-size: cover;
+}
+
+/* --------------------------------------
+	Title
+-------------------------------------- */
+.title {
+  text-align: center;
+}
+
+.title h1 {
+  margin: 1em 0 0;
+  font-size: 3.2em;
+  font-weight: bold;
+}
+
+.title h2 {
+  margin: 1.5em 0 0;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 500px) {
+  .title h1 {
+    font-size: 2em;
+  }
+
+  .title h2 {
+    font-size: 1.5em;
+  }
+}
+
+/* --------------------------------------
+	clock
+-------------------------------------- */
+.clock {
+  max-width: 85%;
+  margin: 50px auto 0;
+}
+
+.clock .clock__frame {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  border-color: $clock-color;
+  border-style: solid;
+  border-width: $clock-width-pc;
+  border-radius: 50%;
+}
+
+.clock .clock__frame::before {
+  position: absolute;
+  top: calc(50% - ($clock-width-pc / 2));
+  left: calc(50% - 1px);
+  width: 50%;
+  height: $clock-width-pc;
+  content: '';
+  background-color: $clock-color;
+  transform: rotateZ(90deg);
+  transform-origin: left;
+}
+
+.clock .clock__needle {
+  position: absolute;
+  top: calc(50% - ($clock-width-pc / 2));
+  left: calc(50% - 1px);
+  display: block;
+  width: 50%;
+  height: $clock-width-pc;
+  color: red;
+  background-color: currentcolor;
+  transform: rotateZ(90deg);
+  transform-origin: left;
+  animation-name: needle-rotate;
+  animation-duration: 15s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.clock .clock__needle::before {
+  position: absolute;
+  top: -5.5px;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  font-size: 15px;
+  content: '';
+  background: currentcolor;
+  border-radius: 50%;
+}
+
+.clock .clock__settings {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 30px 0 0;
+}
+
+@media screen and (max-width: 500px) {
+  .clock .clock__frame {
+    padding-bottom: 100%;
+    border-width: $clock-width-sp;
+  }
+
+  .clock .clock__frame::before {
+    top: calc(50% - ($clock-width-sp / 2));
+  }
+
+  .clock .clock__needle {
+    top: calc(50% - ($clock-width-sp / 2));
+  }
+
+  .clock .clock__needle::before {
+    top: -3px;
+    font-size: 10px;
+  }
+}
+
+/* --------------------------------------
+	button
+-------------------------------------- */
+.button {
+  max-width: 300px;
+}
+
+.button button {
+  position: relative;
+  padding: 0.3em 2em 0.3em 0.5em;
+  margin: 0;
+  font-size: 16px;
+  background-color: #fff;
+  border-radius: 0.5em;
+  transition: all 1s ease;
+  appearance: none;
+}
+
+.button button:hover {
+  cursor: pointer;
+}
+
+.button button:hover,
+.button button:focus {
+  box-shadow: 0 0 20px #afafafa0;
+}
+
+.button.button--sound button::after {
+  position: absolute;
+  top: calc(50% - 7.5px);
+  right: 7px;
+  width: 18px;
+  height: 15px;
+  content: '';
+}
+
+.button.button--sound.button--sound-on button::after {
+  background: url(/src/assets/icons/sound-on.svg) no-repeat center center;
+  background-size: cover;
+}
+
+.button.button--sound.button--sound-off button::after {
+  background: url(/src/assets/icons/sound-off.svg) no-repeat center center;
+  background-size: cover;
+}
+
+@media screen and (max-width: 500px) {
+  .button button {
+    font-size: 13px;
+  }
+
+  .button.button--sound button::after {
+    top: calc(50% - 6.5px);
+    right: 6px;
+    width: 14px;
+    height: 12px;
+  }
+}
+
+/* --------------------------------------
+	inputs
+-------------------------------------- */
+.label {
+  margin: 0 0 1em;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputs > .input {
+  flex: 1;
+}
+
+.inputs > .input + .input {
+  margin: 0 0 0 15px;
+}
+
+.input input[type="text"],
+.input input[type="number"] {
+  display: block;
+  width: 100%;
+  max-width: 4em;
+  padding: 0.375rem 0.75rem;
+  margin: auto;
+  font-size: 1rem;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+}
+
+.input input[type="text"]:hover,
+.input input[type="number"]:hover {
+  cursor: pointer;
+}
+
+.input input[type="text"]:focus,
+.input input[type="number"]:focus {
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+}
+
+.input input[type="color"] {
+  display: block;
+  width: 100%;
+  max-width: 2.8em;
+  height: 2.2em;
+  padding: 0.15em;
+  margin: auto;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  appearance: none;
+}
+
+.input input[type="color"]:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) {
+  .label {
+    font-size: 16px;
+  }
+
+  .input input[type="text"],
+  .input input[type="number"] {
+    font-size: 14px;
+  }
+
+  .input input[type="color"] {
+    font-size: 15px;
+  }
+
+  .inputs > .input + .input {
+    margin: 0;
+  }
+}
+
+/* --------------------------------------
+	animation
+-------------------------------------- */
+@keyframes needle-rotate {
+  0%,
+  100% {
+    transform: rotateZ(90deg);
+  }
+
+  50% {
+    transform: rotateZ(450deg);
+  }
+}
