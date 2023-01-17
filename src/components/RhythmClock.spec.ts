@@ -10,6 +10,11 @@ import { useSoundPlayer } from '@/composables/use_sound_player'
 
 import RhythmClock from '@/components/RhythmClock.vue'
 
+import {
+  MAX_NEEDLE_NUMBER,
+  MIN_NEEDLE_NUMBER
+} from '@/config'
+
 vi.mock('@/composables/use_sound_player', () => ({
   useSoundPlayer: vi.fn(() => ({
     playSound: vi.fn()
@@ -116,6 +121,24 @@ describe('components/RhythmClock.vue', () => {
 
         wrapper.vm.playNote('A5')
         expect(playSound).toHaveBeenCalledWith('A5')
+      })
+    })
+  })
+
+  describe('watchers:', () => {
+    describe('needleNumber:', () => {
+      it('When the value exceed the max', async () => {
+        wrapper.vm.needleNumber = 20
+        await wrapper.vm.$nextTick()
+
+        expect(wrapper.vm.needleNumber).toBe(MAX_NEEDLE_NUMBER)
+      })
+
+      it('When the value exceed the min', async () => {
+        wrapper.vm.needleNumber = 0
+        await wrapper.vm.$nextTick()
+
+        expect(wrapper.vm.needleNumber).toBe(MIN_NEEDLE_NUMBER)
       })
     })
   })

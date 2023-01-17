@@ -40,8 +40,6 @@ export const useSoundPlayer = () => {
     }
   ).toDestination()
 
-  console.log(soundPlayer)
-
   const playSound = (note = 'C3') => {
     soundPlayer.triggerAttack(note)
   }

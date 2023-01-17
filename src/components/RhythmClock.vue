@@ -24,8 +24,8 @@
               id="needleNumber"
               v-model="needleNumber"
               type="number"
-              min="1"
-              max="16"
+              :min="MIN_NEEDLE_NUMBER"
+              :max="MAX_NEEDLE_NUMBER"
             >
           </div>
         </div>
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 import { useStartTimeStore } from '@/store/startTime'
 
@@ -69,7 +69,9 @@ import { useSoundPlayer } from '@/composables/use_sound_player'
 import {
   DEFAULT_NEEDLE_NUMBER,
   DEFAULT_START_COLOR,
-  DEFAULT_END_COLOR
+  DEFAULT_END_COLOR,
+  MAX_NEEDLE_NUMBER,
+  MIN_NEEDLE_NUMBER
 } from '@/config'
 
 // store
@@ -110,4 +112,14 @@ const needleArray = computed(() => {
 const playNote = (note: string) => {
   playSound(note)
 }
+
+// watchers
+watch(needleNumber, () => {
+  if (needleNumber.value > MAX_NEEDLE_NUMBER) {
+    needleNumber.value = MAX_NEEDLE_NUMBER
+  }
+  if (needleNumber.value < MIN_NEEDLE_NUMBER) {
+    needleNumber.value = MIN_NEEDLE_NUMBER
+  }
+})
 </script>
